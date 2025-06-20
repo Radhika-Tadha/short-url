@@ -16,14 +16,14 @@
     <h1>URL-Shortener</h1>
 
     <% if (locals.id) { %>
-        <p>URL Generated:http://localhost/url/<%= id %>
+        <p>URL Generated:http://localhost:8001/url/<%= id %>
         </p>
         <% } %>
 
             <div>
                 <form method="POST" action="/url">
                     <label>Enter your original URL</label>
-                    <input type="text" name="url" placeholder="https://example.com" />
+                    <input type="text" name="url" placeholder="https://example.com" required />
                     <button type="submit">Generate</button>
                 </form>
             </div>
@@ -37,10 +37,10 @@
                             <th>Clicks</th>
                         </thead>
                         <tbody>
-                            <% urls.forEach(url,index=> { %>
+                            <% urls.forEach((url, index)=> { %>
                                 <tr>
                                     <td>
-                                        <%= index+1 %>
+                                        <%= index + 1 %>
                                     </td>
                                     <td>
                                         <%= url.shortId %>
@@ -54,6 +54,7 @@
                                 </tr>
                                 <% }) %>
                         </tbody>
+
                     </table>
 
                     <% } %>
