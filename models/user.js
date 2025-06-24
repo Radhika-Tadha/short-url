@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+        // minlength: [4, "Username must be at least 3 characters long"],
+    },
+    role: {
+        type: String,
+        required: true,
+        default: "NORMAL",
     },
 },
     { timestamps: true }

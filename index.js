@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require("path");
 const URL = require('./models/url');
 const cookieParser = require("cookie-parser");
-const { restrictToLoggedinUserOnly, checkAuth } = require("./middlewares/auth");
+const { checkForAuthentication,restrictTo } = require("./middlewares/auth");
 // const { connectToMongo } = require("./conn");
 
 const staticRouter = require("./routes/staticRouter");
@@ -19,10 +19,11 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());          // Enable JSON parsing
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); // ✅ Correct — you must CALL the function
+app.use(checkForAuthentication);
 
-app.use('/url', restrictToLoggedinUserOnly, urlRoute);        // Mount /url routes
+app.use('/url',restrictTo (["NORMAL"]), urlRoute);        // Mount /url routes
 app.use('/user', userRoute);
-app.use('/', checkAuth, staticRouter);
+app.use('/', staticRouter);
 
 app.get('/:shortId', async (req, res) => {
     try {
