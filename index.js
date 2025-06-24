@@ -18,7 +18,7 @@ app.set("views", path.resolve("./views"));
 
 app.use(express.json());          // Enable JSON parsing
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser);
+app.use(cookieParser()); // ✅ Correct — you must CALL the function
 
 app.use('/url', restrictToLoggedinUserOnly, urlRoute);        // Mount /url routes
 app.use('/user', userRoute);
@@ -56,7 +56,7 @@ async function start() {
         console.log('Connected to MongoDB');
 
         app.listen(PORT, () =>
-            console.log(`Server running: https://localhost:${PORT}`)
+            console.log(`Server running: http://localhost:${PORT}`)
         );
     } catch (err) {
         console.error('DB connection error:', err);
